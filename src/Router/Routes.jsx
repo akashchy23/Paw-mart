@@ -7,10 +7,12 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Profile from "../Pages/Profile";
 import PrivateRoute from "./PrivateRoute";
-import ServiceDetails from "../Pages/ServiceDetails";
+
 import ForgetPass from "../Pages/ForgetPass";
 import Error from "../Pages/Error";
 import AddService from "../Pages/AddService";
+import Mpdetails from "../Pages/Mpdetails";
+import Myservices from "../Pages/Myservices";
 
 
 const router = createBrowserRouter([
@@ -39,10 +41,7 @@ const router = createBrowserRouter([
           path: "/Profile",
           element: <PrivateRoute><Profile></Profile></PrivateRoute>
         },
-        {
-          path: "/details/:myId",
-          element: <PrivateRoute><ServiceDetails></ServiceDetails></PrivateRoute>
-        },
+       
         {
           path:"/forget/:email",
           element: <ForgetPass></ForgetPass>
@@ -50,6 +49,14 @@ const router = createBrowserRouter([
         {
           path:"/addservices",
           element:<AddService></AddService>
+        },
+        {
+          path:"/mpdetails/:id",
+         element:<Mpdetails></Mpdetails>
+        },
+        {
+          path:"/myservices",
+          element:<Myservices></Myservices>
         }
     ]
   },

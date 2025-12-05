@@ -6,7 +6,7 @@ const Services = () => {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    fetch("./Data.json")
+    fetch("http://localhost:3000/services")
       .then((res) => res.json())
       .then((data) => setServices(data))
       .catch((err) => console.log(err));
@@ -50,7 +50,7 @@ const Services = () => {
               </div>
 
               <div className="card-actions justify-end">
-                <Link to={`/details/${service?.serviceId}`}>
+                <Link to={`/mpdetails/${service?._id}`}>
                   <button className="btn btn-primary text-sm md:text-base">
                     View Details
                   </button>
