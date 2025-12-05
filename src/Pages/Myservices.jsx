@@ -13,7 +13,7 @@ const Myservices = () => {
     }, [user?.email]);
     return (
         <div>
-            <h2>Bokachuda Ayan er services</h2>
+            <h2 className='text-center text-3xl my-3'>My Services</h2>
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
@@ -48,9 +48,9 @@ const Myservices = () => {
                                <p>{services?.description}</p>
                             </td>
                             <td>{services?.price}</td>
-                            <th className='flex'>
-                                <button className="btn btn-ghost btn-xs">details</button>
-                                <button className="btn btn-ghost btn-xs">details</button>
+                            <th className='flex gap-1'>
+                                <button className="btn btn-error btn-xs">Delete</button>
+                                <button className="btn btn-primary btn-xs">Edit</button>
                             </th>
                         </tr>)
                        }
