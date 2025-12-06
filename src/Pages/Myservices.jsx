@@ -1,5 +1,7 @@
 import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
+import { Link } from 'react-router';
+import axios from 'axios';
 
 const Myservices = () => {
     const { user } = use(AuthContext)
@@ -11,6 +13,8 @@ const Myservices = () => {
             .then((data) => setMyServices(data))
             .catch((err) => console.log(err));
     }, [user?.email]);
+
+   
     return (
         <div>
             <h2 className='text-center text-3xl my-3'>My Services</h2>
@@ -49,8 +53,9 @@ const Myservices = () => {
                             </td>
                             <td>{services?.price}</td>
                             <th className='flex gap-1'>
-                                <button className="btn btn-error btn-xs">Delete</button>
-                                <button className="btn btn-primary btn-xs">Edit</button>
+                                <button onClick={()=>handleDelete(services?._id)} className="btn btn-error btn-xs">Delete</button>
+                                <Link to={`/update-services/${services?._id}`}> <button className="btn btn-primary btn-xs">Edit</button></Link>
+                               
                             </th>
                         </tr>)
                        }
