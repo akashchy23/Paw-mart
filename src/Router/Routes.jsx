@@ -49,7 +49,7 @@ const router = createBrowserRouter([
         },
         {
           path:"/addservices",
-          element:<AddService></AddService>
+          element:<PrivateRoute><AddService></AddService></PrivateRoute>
         },
         {
           path:"/mpdetails/:id",
@@ -57,11 +57,11 @@ const router = createBrowserRouter([
         },
         {
           path:"/myservices",
-          element:<Myservices></Myservices>
+          element:<PrivateRoute><Myservices></Myservices></PrivateRoute>
         },
         {
           path:"/update-services/:id",
-          element:<UpdateServices></UpdateServices>
+          element:<PrivateRoute><UpdateServices></UpdateServices></PrivateRoute>
         }
     ]
   },

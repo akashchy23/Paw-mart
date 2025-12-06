@@ -1,9 +1,11 @@
 import React, { use } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 const AddService = () => {
      const {user}=use(AuthContext)
+     const navigate = useNavigate()
     const handleSubmit = (e) => {
         e.preventDefault()
         const form = e.target
@@ -30,7 +32,10 @@ const AddService = () => {
 
         // console.log(formData)
         axios.post('http://localhost:3000/services',formData)
-          .then(res=> console.log(res))
+          .then(res=> {
+            console.log(res);
+            navigate("/services")
+        })
          
     }
     return (

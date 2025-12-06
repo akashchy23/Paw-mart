@@ -75,12 +75,15 @@ const Navbar = () => {
           <li className="font-medium text-lg hover:text-blue-300">
             <Link to="/Profile">My Profile</Link>
           </li>
-          <li className="font-medium text-lg hover:text-blue-300">
-            <Link to="/addservices">Add to Services</Link>
-          </li>
-          <li className="font-medium text-lg hover:text-blue-300">
-            <Link to="/myservices">My Services</Link>
-          </li>
+          {
+            user && <>
+              <li className="font-medium text-lg hover:text-blue-300">
+                <Link to="/addservices">Add to Services</Link>
+              </li>
+              <li className="font-medium text-lg hover:text-blue-300">
+                <Link to="/myservices">My Services</Link>
+              </li></>
+          }
         </ul>
       </div>
 

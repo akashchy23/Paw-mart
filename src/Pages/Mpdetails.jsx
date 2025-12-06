@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { toast } from "react-toastify";
+import { AuthContext } from "../Provider/AuthProvider";
+
 
 const Mpdetails = () => {
     const [services, setServices] = useState([]);
 
     const { id } = useParams();
-    
+   const {user}=use(AuthContext)
 
     useEffect(() => {
         fetch(`http://localhost:3000/services/${id}`)
             .then((res) => res.json())
             .then((data) => setServices(data))
             .catch((err) => console.log(err));
-    }, []);
+    }, [id]);
 
-  
+
     return (
         <div className="min-h-screen flex justify-center items-center p-6">
             <div className="max-w-6xl w-full bg-white shadow-2xl rounded-2xl p-10 flex flex-col lg:flex-row gap-10">
@@ -63,39 +64,45 @@ const Mpdetails = () => {
                         <h2 className="text-3xl font-bold text-center mb-5">
                             Book Session
                         </h2>
+                        <button className="btn w-full py-3 font-semibold text-white bg-purple-600" onClick={() => document.getElementById('my_modal_3').showModal()}>Book Now</button>
+                        <dialog id="my_modal_3" className="modal">
+                            <div className="modal-box">
+                                <form method="dialog">
+                                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                </form>
+                                <form className="fieldset bg-base-200 border-base-300 rounded-box w-full border p-4">
+                                    <legend className="fieldset-legend">Order details</legend>
 
-                        <form
-                            onSubmit={(e) => {
-                                e.preventDefault();
-                                toast.success("Booked successfully!", {
-                                    autoClose: 2000,
-                                    pauseOnHover: false,
-                                });
-                                e.target.reset();
-                            }}
-                            className="space-y-4"
-                        >
-                            <input
-                                type="text"
-                                placeholder="Your Name"
-                                className="w-full p-3 rounded-lg border focus:ring-2 focus:ring-indigo-400 outline-none"
-                                required
-                            />
+                                    <label className="label">Product Name</label>
+                                    <input readOnly defaultValue={services?.name} type="text" className="input" placeholder="Product Name" />
 
-                            <input
-                                type="email"
-                                placeholder="Your Email"
-                                className="w-full p-3 rounded-lg border focus:ring-2 focus:ring-indigo-400 outline-none"
-                                required
-                            />
+                                    <label className="label">Buyer Name</label>
+                                    <input  defaultValue={user?.displayName} type="text" className="input" placeholder="Buyer Name<" />
 
-                            <button
-                                type="submit"
-                                className="w-full py-3 font-semibold text-white rounded-lg bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 hover:from-purple-600 hover:to-indigo-600 transition-all duration-300 shadow-md hover:shadow-xl"
-                            >
-                                Book Now
-                            </button>
-                        </form>
+                                    <label className="label">Buyer Email</label>
+                                    <input readOnly defaultValue={user?.email} type="email" className="input" placeholder="Buyer email" />
+
+                                    <label className="label">Quantity</label>
+                                    <input type="number" className="input" placeholder="Quantity" />
+
+                                    <label className="label">Price</label>
+                                    <input readOnly defaultValue={services?.price} type="number" className="input" placeholder="price" />
+
+                                    <label className="label">Adress</label>
+                                    <input type="text" className="input" placeholder="adress" />
+
+                                    <label className="label">Phone Number</label>
+                                    <input type="text" className="input" placeholder="Phone Number" />
+
+                                    <label className="label">Additional note</label>
+                                    <textarea type="text" placeholder="Additional note" className="input" />
+
+                                    <button className="btn btn-primary" type="submit">Order</button>
+                                </form>
+
+                            </div>
+                        </dialog>
+
                     </div>
                 </div>
             </div>
