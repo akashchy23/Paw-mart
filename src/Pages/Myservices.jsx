@@ -14,7 +14,12 @@ const Myservices = () => {
             .catch((err) => console.log(err));
     }, [user?.email]);
 
-   
+    const handleDelete = (id) => {
+        axios.delete(`http://localhost:3000/delete/${id}`)
+            .then(res => console.log(res));
+        const filter = myServices.filter(service => service._id != id)
+        setMyServices(filter)
+    }
     return (
         <div>
             <h2 className='text-center text-3xl my-3'>My Services</h2>
@@ -30,39 +35,39 @@ const Myservices = () => {
                         </tr>
                     </thead>
                     <tbody>
-                       {
-                        myServices?.map(services=> 
-                        <tr>
-                            <td>
-                                <div className="flex items-center gap-3">
-                                    <div className="avatar">
-                                        <div className="mask mask-squircle h-12 w-12">
-                                            <img
-                                                src={services?.image}
-                                                alt="Avatar Tailwind CSS Component" />
+                        {
+                            myServices?.map(services =>
+                                <tr>
+                                    <td>
+                                        <div className="flex items-center gap-3">
+                                            <div className="avatar">
+                                                <div className="mask mask-squircle h-12 w-12">
+                                                    <img
+                                                        src={services?.image}
+                                                        alt="Avatar Tailwind CSS Component" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div className="font-bold">{services?.name}</div>
+                                                <div className="text-sm opacity-50">{services?.location}</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <div className="font-bold">{services?.name}</div>
-                                        <div className="text-sm opacity-50">{services?.location}</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                               <p>{services?.description}</p>
-                            </td>
-                            <td>{services?.price}</td>
-                            <th className='flex gap-1'>
-                                <button onClick={()=>handleDelete(services?._id)} className="btn btn-error btn-xs">Delete</button>
-                                <Link to={`/update-services/${services?._id}`}> <button className="btn btn-primary btn-xs">Edit</button></Link>
-                               
-                            </th>
-                        </tr>)
-                       }
-                        
+                                    </td>
+                                    <td>
+                                        <p>{services?.description}</p>
+                                    </td>
+                                    <td>{services?.price}</td>
+                                    <th className='flex gap-1'>
+                                        <button onClick={() => handleDelete(services?._id)} className="btn btn-error btn-xs">Delete</button>
+                                        <Link to={`/update-services/${services?._id}`}> <button className="btn btn-primary btn-xs">Edit</button></Link>
+
+                                    </th>
+                                </tr>)
+                        }
+
                     </tbody>
-                   
-                   
+
+
                 </table>
             </div>
         </div>
