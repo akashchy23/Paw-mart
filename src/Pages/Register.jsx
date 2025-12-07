@@ -5,9 +5,8 @@ import { AuthContext } from "../Provider/AuthProvider";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 
-
 const Register = () => {
-  const navigate =  useNavigate();
+  const navigate = useNavigate();
   const { registerWithEmailPassword, setUser, user, handleGoogleSignIn } =
     useContext(AuthContext);
 
@@ -21,15 +20,9 @@ const Register = () => {
     const uppercase = /[A-Z]/;
     const lowercase = /[a-z]/;
 
-    if (password.length < 6) {
-      return alert("less than 6 characters");
-    }
-    if (!uppercase.test(password)) {
-      return alert("Need a Uppercase");
-    }
-    if (!lowercase.test(password)) {
-      return alert("Need a Lowercase");
-    }
+    if (password.length < 6) return alert("less than 6 characters");
+    if (!uppercase.test(password)) return alert("Need an Uppercase");
+    if (!lowercase.test(password)) return alert("Need a Lowercase");
 
     registerWithEmailPassword(email, password)
       .then((userCredential) => {
@@ -39,112 +32,102 @@ const Register = () => {
         })
           .then(() => {
             setUser(userCredential.user);
-             navigate("/");
+            navigate("/");
           })
-          .catch((error) => {
-            console.log(error);
-          });
+          .catch((error) => console.log(error));
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
 
-  console.log(user);
-
-  // for google sign in
   const googleSignIn = () => {
     handleGoogleSignIn()
       .then((result) => {
-        const user = result.user;
-        setUser(user);
-        navigate("/")
+        setUser(result.user);
+        navigate("/");
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => console.log(error));
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
-      <div className="rounded-2xl shadow-2xl p-8 w-[420px] border bg-white">
-        <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-amber-600 via-orange-500 to-yellow-400 bg-clip-text text-transparent mb-6">
-          Create Your Warm Paw Account
+    <div className="min-h-screen flex items-center justify-center p-6 bg-gray-100 dark:bg-gray-900 transition-all">
+      <div className="rounded-2xl shadow-2xl p-8 w-[420px] border bg-white dark:bg-gray-800 dark:border-gray-700 transition-all">
+        <h2 className="text-3xl font-bold text-center bg-gradient-to-r from-indigo-600 via-blue-500 to-cyan-400 bg-clip-text text-transparent mb-6">
+          Create Your PAW MART Account
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
           <div>
-            <label className="font-medium">Full Name</label>
+            <label className="font-medium text-gray-800 dark:text-gray-200">Full Name</label>
             <input
               name="fullName"
               type="text"
               placeholder="Enter your full name"
-              className="w-full p-3 mt-1 rounded-lg border focus:ring focus:ring-amber-300 outline-none"
+              className="w-full p-3 mt-1 rounded-lg border dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring focus:ring-blue-300 outline-none"
               required
             />
           </div>
 
           {/* Email */}
           <div>
-            <label className="font-medium">Email</label>
+            <label className="font-medium text-gray-800 dark:text-gray-200">Email</label>
             <input
               name="email"
               type="email"
               placeholder="Enter your email"
-              className="w-full p-3 mt-1 rounded-lg border focus:ring focus:ring-amber-300 outline-none"
+              className="w-full p-3 mt-1 rounded-lg border dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring focus:ring-blue-300 outline-none"
               required
             />
           </div>
 
           {/* Photo URL */}
           <div>
-            <label className="font-medium">Photo URL</label>
+            <label className="font-medium text-gray-800 dark:text-gray-200">Photo URL</label>
             <input
               name="photoURL"
               type="text"
               placeholder="Enter your photo URL"
-              className="w-full p-3 mt-1 rounded-lg border focus:ring focus:ring-amber-300 outline-none"
+              className="w-full p-3 mt-1 rounded-lg border dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring focus:ring-blue-300 outline-none"
             />
           </div>
 
           {/* Password */}
           <div>
-            <label className="font-medium">Password</label>
+            <label className="font-medium text-gray-800 dark:text-gray-200">Password</label>
             <input
               name="password"
               type="password"
               placeholder="Enter your password"
-              className="w-full p-3 mt-1 rounded-lg border focus:ring focus:ring-amber-300 outline-none"
+              className="w-full p-3 mt-1 rounded-lg border dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring focus:ring-blue-300 outline-none"
               required
             />
           </div>
 
-          {/* Register Button */}
+          {/* Register Button (NEW COLOR) */}
           <button
             type="submit"
-            className="w-full text-center px-6 py-3 font-semibold text-white rounded-lg bg-gradient-to-r from-amber-600 via-orange-500 to-yellow-400 hover:from-yellow-400 hover:via-orange-500 hover:to-amber-600 transition-all duration-300 shadow-md hover:shadow-lg"
+            className="w-full text-center px-6 py-3 font-semibold text-white rounded-lg bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500 hover:from-purple-500 hover:via-indigo-500 hover:to-blue-600 transition-all duration-300 shadow-md hover:shadow-lg"
           >
             Register
           </button>
 
-          {/* Google Login */}
+          {/* Google Login (NEW STYLE) */}
           <button
             type="button"
             onClick={googleSignIn}
-            className="w-full flex items-center justify-center gap-3 px-6 py-3 mt-2 font-semibold text-gray-700 rounded-lg border shadow-sm bg-white hover:shadow-md transition-all duration-300"
+            className="w-full flex items-center justify-center gap-3 px-6 py-3 mt-2 font-semibold text-gray-800 dark:text-gray-200 rounded-lg border dark:border-gray-600 shadow-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300"
           >
-            <FcGoogle />
+            <FcGoogle size={22} />
             Continue with Google
           </button>
         </form>
 
         {/* Redirect to Login */}
-        <p className="text-center text-gray-600 mt-4">
+        <p className="text-center text-gray-600 dark:text-gray-300 mt-4">
           Already have an account?{" "}
           <Link
             to={"/login"}
-            className="text-amber-600 font-semibold hover:underline"
+            className="text-blue-600 dark:text-blue-300 font-semibold hover:underline"
           >
             Login
           </Link>
