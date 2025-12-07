@@ -54,7 +54,7 @@ const router = createBrowserRouter([
         },
         {
           path:"/mpdetails/:id",
-         element:<Mpdetails></Mpdetails>
+         element:<PrivateRoute><Mpdetails></Mpdetails></PrivateRoute>
         },
         {
           path:"/myservices",
