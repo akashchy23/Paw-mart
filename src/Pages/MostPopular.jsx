@@ -39,9 +39,7 @@ const MostPopular = () => {
                 Location: <span className="font-medium text-black">{item.location}</span>
               </p>
 
-              <p className="text-sm text-gray-600">
-                Posted By: <span className="font-medium text-black">{item.email}</span>
-              </p>
+             
 
               <p className="text-sm text-gray-600">
                 Date: <span className="font-medium text-black">{item.date}</span>
