@@ -129,7 +129,7 @@ const Mpdetails = () => {
                                     <label className="label">Additional note</label>
                                     <textarea name="note" type="text" placeholder="Additional note" className="input" />
 
-                                    
+                                    <button className="btn btn-primary" type="submit">Order</button>
                                 </form>
 
                             </div>
