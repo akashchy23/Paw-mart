@@ -1,13 +1,14 @@
 import React, { use, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
+import axios from "axios";
 
 
 const Mpdetails = () => {
     const [services, setServices] = useState([]);
 
     const { id } = useParams();
-   const {user}=use(AuthContext)
+    const { user } = use(AuthContext)
 
     useEffect(() => {
         fetch(`http://localhost:3000/services/${id}`)
@@ -16,7 +17,38 @@ const Mpdetails = () => {
             .catch((err) => console.log(err));
     }, [id]);
 
+    const handleOrder = (e) => {
+        e.preventDefault();
+        const form = e.target;
 
+        const productName = form.productName.value;
+        const buyerName = form.buyerName.value;
+        const buyerEmail = parseInt(form.buyerEmail.value);
+        const quantity = form.quantity.value;
+        const price = parseInt(form.price.value);
+        const address = form.address.value;
+        const phoneNumber = form.phoneNumber.value
+        const note = form.note.value;
+
+        const formData = {
+            productId: id,
+            productName,
+            buyerName,
+            buyerEmail,
+            quantity,
+            price,
+            address,
+            phoneNumber,
+            note,
+            date: new Date()
+        }
+   
+        axios.post("http://localhost:3000/orders", formData)
+          .then(res=>console.log(res))
+          .catch(err=>console.log(err))
+          console.log(formData)
+    }
+    
     return (
         <div className="min-h-screen flex justify-center items-center p-6">
             <div className="max-w-6xl w-full bg-white shadow-2xl rounded-2xl p-10 flex flex-col lg:flex-row gap-10">
@@ -70,32 +102,32 @@ const Mpdetails = () => {
                                 <form method="dialog">
                                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                                 </form>
-                                <form className="fieldset bg-base-200 border-base-300 rounded-box w-full border p-4">
+                                <form onSubmit={handleOrder} className="fieldset bg-base-200 border-base-300 rounded-box w-full border p-4">
                                     <legend className="fieldset-legend">Order details</legend>
 
                                     <label className="label">Product Name</label>
-                                    <input readOnly defaultValue={services?.name} type="text" className="input" placeholder="Product Name" />
+                                    <input name="productName" readOnly defaultValue={services?.name} type="text" className="input" placeholder="Product Name" />
 
                                     <label className="label">Buyer Name</label>
-                                    <input  defaultValue={user?.displayName} type="text" className="input" placeholder="Buyer Name<" />
+                                    <input name="buyerName" defaultValue={user?.displayName} type="text" className="input" placeholder="Buyer Name<" />
 
                                     <label className="label">Buyer Email</label>
-                                    <input readOnly defaultValue={user?.email} type="email" className="input" placeholder="Buyer email" />
+                                    <input name="buyerEmail" readOnly defaultValue={user?.email} type="email" className="input" placeholder="Buyer email" />
 
                                     <label className="label">Quantity</label>
-                                    <input type="number" className="input" placeholder="Quantity" />
+                                    <input required name="quantity" type="number" className="input" placeholder="Quantity" />
 
                                     <label className="label">Price</label>
-                                    <input readOnly defaultValue={services?.price} type="number" className="input" placeholder="price" />
+                                    <input name="price" readOnly defaultValue={services?.price} type="number" className="input" placeholder="price" />
 
-                                    <label className="label">Adress</label>
-                                    <input type="text" className="input" placeholder="adress" />
+                                    <label className="label">Address</label>
+                                    <input required name="address" type="text" className="input" placeholder="address" />
 
                                     <label className="label">Phone Number</label>
-                                    <input type="text" className="input" placeholder="Phone Number" />
+                                    <input required name="phoneNumber" type="text" className="input" placeholder="Phone Number" />
 
                                     <label className="label">Additional note</label>
-                                    <textarea type="text" placeholder="Additional note" className="input" />
+                                    <textarea name="note" type="text" placeholder="Additional note" className="input" />
 
                                     <button className="btn btn-primary" type="submit">Order</button>
                                 </form>
