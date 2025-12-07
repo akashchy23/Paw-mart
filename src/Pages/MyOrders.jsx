@@ -37,7 +37,17 @@ const MyOrders = () => {
                                 <td>{order?.phoneNumber}</td>
                                 <td>{order?.address}</td>
                                 <td>{order?.quantity}</td>
-                             
+                                <td>
+                                    {order?.date &&
+                                        new Date(order.date).toLocaleString("en-US", {
+                                            year: "numeric",
+                                            month: "2-digit",
+                                            day: "2-digit",
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                        })
+                                    }
+                                </td>
 
                             </tr>)
                         }
