@@ -5,7 +5,7 @@ const MyOrders = () => {
     const [myOrders, setMyOrders] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/orders")
+        axios.get("https://missionscic10-tau.vercel.app/orders")
             .then(res => {
                 setMyOrders(res.data)
             })

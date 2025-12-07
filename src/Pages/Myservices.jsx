@@ -9,7 +9,7 @@ const Myservices = () => {
     const [myServices, setMyServices] = useState([]);
     console.log(myServices)
     useEffect(() => {
-        fetch(`http://localhost:3000/my-services?email=${user?.email}`)
+        fetch(`https://missionscic10-tau.vercel.app/my-services?email=${user?.email}`)
             .then((res) => res.json())
             .then((data) => setMyServices(data))
             .catch((err) => console.log(err));
@@ -29,7 +29,7 @@ const Myservices = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:3000/delete/${id}`)
+                axios.delete(`https://missionscic10-tau.vercel.app/delete/${id}`)
                     .then(res => console.log(res));
                 const filter = myServices.filter(service => service._id != id)
                 setMyServices(filter)

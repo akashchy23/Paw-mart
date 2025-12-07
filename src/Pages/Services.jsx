@@ -6,7 +6,7 @@ const Services = () => {
   const [services, setServices] = useState([]);
   const [category, setCategory] = useState('');
   useEffect(() => {
-    fetch(`http://localhost:3000/services?category=${category}`)
+    fetch(`https://missionscic10-tau.vercel.app/services?category=${category}`)
       .then((res) => res.json())
       .then((data) => setServices(data))
       .catch((err) => console.log(err));

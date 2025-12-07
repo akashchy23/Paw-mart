@@ -11,7 +11,7 @@ const Mpdetails = () => {
     const { user } = use(AuthContext)
 
     useEffect(() => {
-        fetch(`http://localhost:3000/services/${id}`)
+        fetch(`https://missionscic10-tau.vercel.app/services/${id}`)
             .then((res) => res.json())
             .then((data) => setServices(data))
             .catch((err) => console.log(err));
@@ -43,7 +43,7 @@ const Mpdetails = () => {
             date: new Date()
         }
    
-        axios.post("http://localhost:3000/orders", formData)
+        axios.post("https://missionscic10-tau.vercel.app/orders", formData)
           .then(res=>console.log(res))
           .catch(err=>console.log(err))
           console.log(formData)

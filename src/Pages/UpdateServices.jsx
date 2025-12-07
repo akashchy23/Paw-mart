@@ -9,7 +9,7 @@ const UpdateServices = () => {
     const [service, setService] = useState(null);
     const [category, setcategory] = useState(service?.category)
     useEffect(() => {
-        axios.get(`http://localhost:3000/services/${id}`)
+        axios.get(`https://missionscic10-tau.vercel.app/services/${id}`)
             .then(res => {
                 setService(res.data)
                 setcategory(res.data.category)
@@ -41,7 +41,7 @@ const UpdateServices = () => {
 
         }
         console.log(formData)
-        axios.put(`http://localhost:3000/update/${id}`,formData)
+        axios.put(`https://missionscic10-tau.vercel.app/update/${id}`,formData)
          .then(res=>console.log(res))
 
     }

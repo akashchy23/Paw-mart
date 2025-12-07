@@ -5,7 +5,7 @@ const MostPopular = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/services")
+    fetch("https://missionscic10-tau.vercel.app/services")
       .then((res) => res.json())
       .then((data) => setData(data))
       .catch((err) => console.log(err));
