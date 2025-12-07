@@ -2,10 +2,11 @@ import React, { use } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import Swal from 'sweetalert2';
 
 const AddService = () => {
-     const {user}=use(AuthContext)
-     const navigate = useNavigate()
+    const { user } = use(AuthContext)
+    const navigate = useNavigate()
     const handleSubmit = (e) => {
         e.preventDefault()
         const form = e.target
@@ -31,12 +32,20 @@ const AddService = () => {
         }
 
         // console.log(formData)
-        axios.post('http://localhost:3000/services',formData)
-          .then(res=> {
-            console.log(res);
-            navigate("/services")
-        })
-         
+        axios.post('http://localhost:3000/services', formData)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.acknowledged) {
+                    Swal.fire({
+                        title: "Service is created succsessfully!",
+                        icon: "success",
+                        draggable: true
+                    });
+                }
+               form.reset()
+                navigate("/services")
+            })
+
     }
     return (
         <div className="min-h-screen flex justify-center items-center bg-gray-100 p-6">
@@ -135,7 +144,7 @@ const AddService = () => {
                 <div>
                     <label className="block font-semibold mb-1">Email</label>
                     <input
-                    value={user?.email}
+                        value={user?.email}
                         type="email"
                         name="email"
                         className="w-full p-3 border rounded-lg bg-gray-200 cursor-not-allowed"
