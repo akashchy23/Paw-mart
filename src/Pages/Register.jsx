@@ -4,18 +4,20 @@ import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
+import axios from "axios";
 
 const Register = () => {
   const navigate = useNavigate();
   const { registerWithEmailPassword, setUser, user, handleGoogleSignIn } =
     useContext(AuthContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     const fullName = e.target.fullName.value;
-    const photoURL = e.target.photoURL.value;
+    const photoURL = e.target.photoURL;
+    const file = photoURL.files[0];
 
     const uppercase = /[A-Z]/;
     const lowercase = /[a-z]/;
@@ -24,19 +26,41 @@ const Register = () => {
     if (!uppercase.test(password)) return alert("Need an Uppercase");
     if (!lowercase.test(password)) return alert("Need a Lowercase");
 
-    registerWithEmailPassword(email, password)
-      .then((userCredential) => {
-        updateProfile(auth.currentUser, {
-          displayName: fullName,
-          photoURL: photoURL,
-        })
-          .then(() => {
-            setUser(userCredential.user);
-            navigate("/");
+    const res = await axios.post(`https://api.imgbb.com/1/upload?key=4ef5a5f7c97e1a04cc960bb3d1e91b93`, { image: file }, {
+      headers: {
+        "Content-Type": 'multipart/form-data',
+
+      }
+    })
+    const photo =  res.data.data.display_url ;
+
+    const formData = {
+      email,
+      password,
+      fullName,
+      photo,
+      role: 'user'
+    }
+  console.log(formData)
+ 
+    if (res.data.success == true) {
+      registerWithEmailPassword(email, password)
+        .then((userCredential) => {
+          updateProfile(auth.currentUser, {
+            displayName: fullName,
+            photoURL: photo,
           })
-          .catch((error) => console.log(error));
-      })
-      .catch((error) => console.log(error));
+            .then(() => {
+              setUser(userCredential.user);
+              axios.post('https://missionscic10-tau.vercel.app/users',formData)
+               .then(res=>console.log(res.data))
+               .catch(err=>{console.log(err)})
+            })
+            .catch((error) => console.log(error));
+            navigate('/');
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   const googleSignIn = () => {
@@ -85,7 +109,7 @@ const Register = () => {
             <label className="font-medium text-gray-800 dark:text-gray-200">Photo URL</label>
             <input
               name="photoURL"
-              type="text"
+              type="file"
               placeholder="Enter your photo URL"
               className="w-full p-3 mt-1 rounded-lg border dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring focus:ring-blue-300 outline-none"
             />

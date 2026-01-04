@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
+import axios from "axios";
 
 
 
@@ -13,7 +14,9 @@ const AuthProvider = ({children}) => {
 
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
+    const [role, setRole] = useState('')
     console.log(user)
+    console.log(role)
   const registerWithEmailPassword = (email, password) => {
     // setLoading(false)
     return createUserWithEmailAndPassword(auth, email, password)
@@ -37,13 +40,23 @@ const AuthProvider = ({children}) => {
         }
   },[])
 
+    useEffect(() => {
+        if (!user) return;
+        axios.get(`https://missionscic10-tau.vercel.app/users/${user.email}`)
+            .then(res => {
+                setRole(res.data.role)
+                
+               
+            })
+    }, [user])
 
   const authData = {
     registerWithEmailPassword,
     setUser,
     user,
     handleGoogleSignIn,
-    loading
+    loading,
+    role
   };
 
 

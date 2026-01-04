@@ -2,7 +2,6 @@ import { FcGoogle } from "react-icons/fc";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-
 import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import { auth } from "../firebase/firebase.config";
@@ -12,17 +11,29 @@ const Login = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+
+  // 🔹 STATE FOR AUTO-FILL
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  // 🔹 DEMO USER CREDENTIAL
+  const demoUser = {
+    email: "user@demo.com",
+    password: "User@123",
+  };
+
+  // 🔹 AUTO-FILL HANDLER
+  const fillDemoUser = () => {
+    setEmail(demoUser.email);
+    setPassword(demoUser.password);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        setUser(user);
+        setUser(userCredential.user);
         toast.success("Logged in successfully!");
         navigate(location.state ? location.state : "/");
       })
@@ -55,25 +66,32 @@ const Login = () => {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Email Field */}
+          {/* Email */}
           <div>
-            <label className="font-medium text-gray-800 dark:text-gray-200">Email</label>
+            <label className="font-medium text-gray-800 dark:text-gray-200">
+              Email
+            </label>
             <input
-              onChange={(e) => setEmail(e.target.value)}
               name="email"
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               className="w-full p-3 mt-1 rounded-lg border dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring focus:ring-blue-300 outline-none"
               required
             />
           </div>
 
-          {/* Password Field */}
+          {/* Password */}
           <div>
-            <label className="font-medium text-gray-800 dark:text-gray-200">Password</label>
+            <label className="font-medium text-gray-800 dark:text-gray-200">
+              Password
+            </label>
             <input
               name="password"
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               className="w-full p-3 mt-1 rounded-lg border dark:bg-gray-700 dark:text-white dark:border-gray-600 focus:ring focus:ring-blue-300 outline-none"
               required
@@ -81,40 +99,47 @@ const Login = () => {
           </div>
 
           {/* Forgot Password */}
-          <div>
-            <button
-              onClick={handleForget}
-              type="button"
-              className="text-sm text-gray-600 dark:text-gray-300 hover:underline"
-            >
-              Forgot Password?
-            </button>
-          </div>
+          <button
+            onClick={handleForget}
+            type="button"
+            className="text-sm text-gray-600 dark:text-gray-300 hover:underline"
+          >
+            Forgot Password?
+          </button>
 
-          {/* Login Button — NEW COLOR */}
+          {/* Login Button */}
           <button
             type="submit"
-            className="w-full text-center px-6 py-3 font-semibold text-white rounded-lg bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500 hover:from-purple-500 hover:via-indigo-500 hover:to-blue-600 transition-all duration-300 shadow-md hover:shadow-lg"
+            className="w-full px-6 py-3 font-semibold text-white rounded-lg bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500 hover:from-purple-500 hover:to-blue-600 transition-all"
           >
             Login
+          </button>
+
+          {/* 🔹 DEMO USER BUTTON */}
+          <button
+            type="button"
+            onClick={fillDemoUser}
+            className="w-full py-2 text-sm font-semibold rounded-lg bg-green-500 text-white hover:bg-green-600"
+          >
+            Login as Demo User
           </button>
 
           {/* Google Login */}
           <button
             type="button"
             onClick={googleSignIn}
-            className="w-full flex items-center justify-center gap-3 px-6 py-3 mt-2 font-semibold text-gray-800 dark:text-gray-200 rounded-lg border dark:border-gray-600 shadow-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300"
+            className="w-full flex items-center justify-center gap-3 px-6 py-3 font-semibold text-gray-800 dark:text-gray-200 rounded-lg border dark:border-gray-600 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600"
           >
             <FcGoogle size={22} />
             Continue with Google
           </button>
 
-          {/* Register Redirect */}
+          {/* Register */}
           <div className="text-center mt-3 text-gray-700 dark:text-gray-300">
-            <span>Don't have an account? </span>
+            Don&apos;t have an account?{" "}
             <Link
-              className="text-blue-600 dark:text-blue-300 font-semibold hover:underline"
               to="/Signup"
+              className="text-blue-600 dark:text-blue-300 font-semibold hover:underline"
             >
               Register
             </Link>

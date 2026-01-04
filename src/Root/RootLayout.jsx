@@ -10,15 +10,19 @@ import { ToastContainer } from "react-toastify";
 
 
 const RootLayout = () => {
-    const {loading} = use(AuthContext); 
-    if(loading){
-        return <div className="h-screen flex justify-center items-center"><HashLoader  color="#049347" /></div>
+    const { loading } = use(AuthContext);
+    if (loading) {
+        return <div className="h-screen flex justify-center items-center"><HashLoader color="#049347" /></div>
     }
     return (
         <div>
-            <Navbar></Navbar>
-            <Outlet></Outlet>
-            <Footer></Footer>
+           <div className='sticky top-0 z-1'>
+             <Navbar></Navbar>
+           </div>
+            <div>
+                <Outlet></Outlet>
+                <Footer></Footer>
+            </div>
             <ToastContainer position="top-right" />
         </div>
     );

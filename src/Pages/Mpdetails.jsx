@@ -1,15 +1,16 @@
 import React, { use, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 
 const Mpdetails = () => {
     const [services, setServices] = useState([]);
-
+    const navigate =useNavigate()
     const { id } = useParams();
     const { user } = use(AuthContext)
-
+     
     useEffect(() => {
         fetch(`https://missionscic10-tau.vercel.app/services/${id}`)
             .then((res) => res.json())
@@ -44,7 +45,11 @@ const Mpdetails = () => {
         }
    
         axios.post("https://missionscic10-tau.vercel.app/orders", formData)
-          .then(res=>console.log(res))
+          .then(res=>{
+            console.log(res);
+             toast("Successfull Orded!!!");
+           navigate('/my-orders');
+          })
           .catch(err=>console.log(err))
           console.log(formData)
     }

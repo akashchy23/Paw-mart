@@ -23,7 +23,7 @@ const Services = () => {
         <option value="Accessories">Accessories</option>
         <option value="Care Products">Care Products</option>
       </select>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-12 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 mt-12 gap-6">
 
         {services.map((service) => (
           <motion.div
